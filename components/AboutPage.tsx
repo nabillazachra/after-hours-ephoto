@@ -25,21 +25,21 @@ const AboutPage: React.FC = () => {
             <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background-light/90 dark:bg-background-dark/80 backdrop-blur-md border-b border-black/5 dark:border-white/10">
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-3 group cursor-pointer" onClick={handleBack}>
-                        <div className="size-6 text-brand-gold flex items-center justify-center">
-                            <span className="material-symbols-outlined text-[28px]">shutter_speed</span>
-                        </div>
-                        <h2 className="text-sm font-bold tracking-[0.2em] uppercase hidden md:block group-hover:text-brand-gold transition-colors">The After Hours</h2>
+                        <img
+                            src="https://drive.google.com/thumbnail?id=1cfqrsPfg36_zhVZIhpPkVa5uU5zE7pvI&sz=w1000"
+                            alt="The After Hours"
+                            className="h-12 w-auto object-contain"
+                        />
                     </div>
                     <nav className="hidden md:flex items-center gap-8">
-                        <a className="text-xs font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Manifesto</a>
-                        <a className="text-xs font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Features</a>
-                        <a className="text-xs font-medium uppercase tracking-widest hover:text-primary transition-colors cursor-pointer">Editorial</a>
+                        <a className="text-xs font-medium uppercase tracking-widest hover:text-brand-gold transition-colors cursor-pointer">Gallery</a>
+                        <a className="text-xs font-medium uppercase tracking-widest hover:text-brand-gold transition-colors cursor-pointer">Contact</a>
                     </nav>
                     <button
                         onClick={handleBook}
                         className="bg-brand-gold hover:bg-brand-goldDim text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all transform hover:scale-105"
                     >
-                        Book Booth
+                        Take a Pic
                     </button>
                 </div>
             </header>
