@@ -101,7 +101,49 @@ const ClientApp: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Main Content Layer - Parallax Effect Reverse/Fade */}
+                            {/* Grain Texture (Static) */}
+                            <div className="absolute inset-0 z-[5] hero-grain opacity-40 pointer-events-none mix-blend-overlay"></div>
+
+                            {/* Nav Bar */}
+                            <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 text-brand-black dark:text-white transition-all duration-500">
+                                <div className="flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.LANDING })}>
+                                        {/* UPDATED LOGO IMAGE SIZE */}
+                                        <img
+                                            src={logoSrc}
+                                            alt="After Hours Logo"
+                                            className="h-36 w-auto object-contain drop-shadow-md transition-all duration-500"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                                    <div className="hidden md:flex items-center gap-8 text-brand-black dark:text-white">
+                                        <button
+                                            onClick={scrollToFooter}
+                                            className="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-brand-blue dark:hover:text-brand-gold transition-colors cursor-pointer relative group"
+                                        >
+                                            Contact
+                                            <span className="absolute -bottom-2 left-0 w-0 h-px bg-brand-blue dark:bg-brand-gold transition-all duration-300 group-hover:w-full"></span>
+                                        </button>
+                                        <span
+                                            onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.TEMPLATE_SELECTION })}
+                                            className="text-[10px] font-bold uppercase tracking-[0.2em] hover:text-brand-blue dark:hover:text-brand-gold transition-colors cursor-pointer relative group"
+                                        >
+                                            Templates
+                                            <span className="absolute -bottom-2 left-0 w-0 h-px bg-brand-blue dark:bg-brand-gold transition-all duration-300 group-hover:w-full"></span>
+                                        </span>
+                                    </div>
+
+                                    {/* Theme Toggle */}
+                                    <button
+                                        onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
+                                        className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-brand-black dark:text-white"
+                                        aria-label="Toggle Theme"
+                                    >
+                                        {state.isDarkMode ? <Icons.Sun size={20} /> : <Icons.Moon size={20} />}
+                                    </button>
+                                </div>
+                            </nav>
                             <div
                                 className="relative z-10 w-full h-full flex flex-col justify-center items-center pointer-events-none"
                                 style={{
