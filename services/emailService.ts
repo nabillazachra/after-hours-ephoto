@@ -9,7 +9,7 @@ export const emailService = {
    */
   sendTransactionNotification: async (transaction: Transaction) => {
     console.group('%c 📧 [EMAIL SERVICE] Transaction Alert', 'color: #D4AF37; font-weight: bold;');
-    console.log(`To: admin@afterhours.com`);
+    console.log(`To: nabillazwork@gmail.com`);
     console.log(`Subject: New Payment Received: IDR ${transaction.amount}`);
     console.log(`Body: Session ${transaction.sessionId} has been paid. Transaction ID: ${transaction.id}`);
     console.groupEnd();
@@ -24,11 +24,11 @@ export const emailService = {
    */
   sendTemplateNotification: async (template: Template) => {
     console.group('%c 📧 [EMAIL SERVICE] Template Alert', 'color: #34D399; font-weight: bold;');
-    console.log(`To: admin@afterhours.com`);
+    console.log(`To: nabillazwork@gmail.com`);
     console.log(`Subject: New Template Uploaded: ${template.name}`);
     console.log(`Body: A new template has been added to the library. ID: ${template.id}`);
     console.groupEnd();
-    
+
     await new Promise(resolve => setTimeout(resolve, 500));
     return true;
   }
