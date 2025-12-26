@@ -32,6 +32,19 @@ const ClientApp: React.FC = () => {
         };
     }, [state.step]);
 
+    // Smooth Scroll to Footer Function
+    const scrollToFooter = () => {
+        const footer = document.getElementById('footer-section');
+        if (footer) {
+            footer.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // Fallback for internal container scroll if ID not found immediately
+            if (scrollRef.current) {
+                scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+            }
+        }
+    };
+
     // Logo Logic - Updated URLs
     const logoSrc = state.isDarkMode
         ? "/logo-light.png" // Dark Mode Asset (White Text)
@@ -88,34 +101,79 @@ const ClientApp: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Hero Content */}
-                            <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center pt-20">
-                                <div className="mb-8 mix-blend-difference">
-                                    <span className="inline-block py-1 px-3 border border-brand-black/20 dark:border-white/20 rounded-full text-[10px] uppercase tracking-[0.2em] font-medium text-brand-black dark:text-white backdrop-blur-sm">
-                                        The Phygital Experience
+                            {/* Main Content Layer - Parallax Effect Reverse/Fade */}
+                            <div
+                                className="relative z-10 w-full h-full flex flex-col justify-center items-center pointer-events-none"
+                                style={{
+                                    opacity: Math.max(0, 1 - scrollY / 600),
+                                    transform: `translate3d(0, -${scrollY * 0.2}px, 0)`
+                                }}
+                            >
+                                {/* Massive Typography - Dark Blue in Light Mode for contrast */}
+                                <div className="relative flex flex-col items-center justify-center w-full leading-[0.85] select-none opacity-90">
+                                    <h1 className="text-[18vw] font-black tracking-[-0.05em] text-brand-blue dark:text-white whitespace-nowrap text-center blur-[1px] animate-fade-in-up mix-blend-multiply dark:mix-blend-overlay" style={{ animationDelay: '0.3s' }}>
+                                        AFTER
+                                    </h1>
+                                    <h1 className="text-[18vw] font-black tracking-[-0.05em] text-brand-blue dark:text-white whitespace-nowrap text-center -mt-[2vw] blur-[1px] animate-fade-in-up mix-blend-multiply dark:mix-blend-overlay" style={{ animationDelay: '0.5s' }}>
+                                        HOURS
+                                    </h1>
+                                </div>
+
+                                {/* Left Side Technical Stats (Desktop Only) */}
+                                <div className="absolute top-1/2 left-8 md:left-16 -translate-y-1/2 flex flex-col gap-12 text-brand-blue/60 dark:text-white/40 hidden md:flex animate-fade-in-slow" style={{ animationDelay: '0.8s' }}>
+                                    <div className="flex flex-col gap-3 items-center group">
+                                        {/* Replaced Icon here too for consistency */}
+                                        <Icons.Aperture className="text-xl group-hover:text-brand-blue dark:group-hover:text-white transition-colors duration-500" />
+                                        <p className="text-[10px] uppercase tracking-widest font-mono writing-vertical-rl rotate-180 opacity-60 group-hover:opacity-100 transition-opacity">ISO 3200</p>
+                                    </div>
+                                    <div className="w-px h-24 bg-gradient-to-b from-transparent via-brand-blue/30 dark:via-white/20 to-transparent"></div>
+                                    <div className="flex flex-col gap-3 items-center group">
+                                        <Icons.Faders className="text-xl group-hover:text-brand-blue dark:group-hover:text-white transition-colors duration-500" />
+                                        <p className="text-[10px] uppercase tracking-widest font-mono writing-vertical-rl rotate-180 opacity-60 group-hover:opacity-100 transition-opacity">+2 EV</p>
+                                    </div>
+                                </div>
+
+                                {/* Floating CTA - Interactive Pointer Events Re-enabled */}
+                                <div className="absolute bottom-[15%] md:bottom-[20%] right-[10%] md:right-[15%] z-20 flex flex-col items-end gap-3 pointer-events-auto animate-fade-in-up" style={{ animationDelay: '1s' }}>
+                                    <button
+                                        onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.TEMPLATE_SELECTION })}
+                                        className="group relative flex items-center justify-between gap-6 h-14 pl-8 pr-2 bg-white/80 dark:bg-white/5 backdrop-blur-xl border border-brand-blue/10 dark:border-white/10 hover:border-brand-blue/30 dark:hover:border-white/30 hover:bg-white dark:hover:bg-white/10 text-brand-blue dark:text-brand-gold hover:text-brand-blue dark:hover:text-white text-sm font-bold uppercase tracking-widest transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden drop-shadow-md"
+                                    >
+                                        {/* Shine Effect */}
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-blue/10 dark:via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+
+                                        <span className="relative z-10 group-hover:tracking-[0.2em] transition-all duration-300">Take a Picture</span>
+
+                                        <div className="size-10 bg-brand-blue dark:bg-white text-white dark:text-black flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110">
+                                            <Icons.ArrowUpRight className="text-lg group-hover:rotate-45 transition-transform duration-300" />
+                                        </div>
+                                    </button>
+                                    <span className="text-[10px] text-brand-blue/60 dark:text-white/40 tracking-[0.3em] uppercase text-right block max-w-[200px] border-t border-brand-blue/20 dark:border-white/10 pt-3 mt-1 font-semibold">
+                                        Luxury Editorial Experience
                                     </span>
                                 </div>
 
-                                <h1 className="font-display font-black text-6xl md:text-8xl lg:text-9xl uppercase tracking-tighter leading-[0.85] text-brand-black dark:text-white mb-8 mix-blend-difference select-none">
-                                    After<br />
-                                    <span className="italic font-serif font-light text-brand-blue dark:text-brand-gold">Hours</span>
-                                </h1>
+                                {/* Bottom Left Location/Playing */}
+                                <div className="absolute bottom-12 md:bottom-16 left-8 md:left-12 flex items-end gap-5 text-brand-black dark:text-white animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
+                                    <div className="size-14 border border-brand-black/10 dark:border-white/10 bg-white/5 backdrop-blur-md rounded-none flex items-center justify-center shadow-lg group">
+                                        <div className="animate-spin-slow group-hover:scale-110 transition-transform duration-700">
+                                            <Icons.Disc weight="fill" size={28} className="text-brand-blue/80 dark:text-white/80" />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-1 pb-1">
+                                        <span className="text-[9px] uppercase tracking-[0.3em] text-brand-blue/80 dark:text-brand-gold font-bold">Location</span>
+                                        <span className="text-xs font-bold uppercase tracking-widest text-brand-black dark:text-white/90">Jakarta, Indonesia</span>
+                                    </div>
+                                </div>
 
-                                <p className="max-w-md mx-auto text-sm md:text-base font-light text-brand-black/80 dark:text-white/80 leading-relaxed mb-12 mix-blend-difference">
-                                    Merging high-fidelity studio aesthetics with instant digital gratification.
-                                    <span className="hidden md:inline"> A new standard for event photography.</span>
-                                </p>
-
-                                <button
-                                    onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.TEMPLATE_SELECTION })}
-                                    className="group relative px-8 py-4 bg-brand-black dark:bg-white text-white dark:text-black overflow-hidden transform transition-all hover:scale-105 active:scale-95 duration-500 ease-out"
+                                {/* Bottom Center Scroll Indicator */}
+                                <div
+                                    onClick={scrollToFooter}
+                                    className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-brand-black/50 dark:text-white/30 animate-pulse pb-8 cursor-pointer hover:text-brand-blue dark:hover:text-white transition-colors z-30 pointer-events-auto"
                                 >
-                                    <span className="relative z-10 font-bold text-xs tracking-[0.2em] uppercase flex items-center gap-3">
-                                        Start Session
-                                        <Icons.ArrowRight weight="bold" className="group-hover:translate-x-1 transition-transform" />
-                                    </span>
-                                    <div className="absolute inset-0 bg-brand-blue dark:bg-brand-gold transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-                                </button>
+                                    <span className="text-[9px] uppercase tracking-[0.3em] font-semibold">Scroll</span>
+                                    <div className="h-16 w-px bg-gradient-to-b from-transparent via-brand-black/40 dark:via-white/40 to-transparent"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -135,8 +193,6 @@ const ClientApp: React.FC = () => {
             case AppStep.ABOUT:
                 return <AboutPage />;
             default:
-                // Fallback for Admin or invalid step - though Admin should be handled by Route now
-                // If state is accidentally existing ADMIN step, we redirect or show null
                 return null;
         }
     };
@@ -145,7 +201,7 @@ const ClientApp: React.FC = () => {
         <div className={`${state.isDarkMode ? 'dark' : ''}`}>
             <div className="bg-zinc-50 dark:bg-brand-black min-h-screen text-brand-black dark:text-brand-white font-sans selection:bg-brand-blue dark:selection:bg-brand-gold selection:text-white dark:selection:text-black overflow-hidden flex flex-col transition-colors duration-500">
                 {/* Top Bar (Only visible inside flows, NOT on Landing/Admin) */}
-                {state.step !== AppStep.LANDING && state.step !== AppStep.ADMIN && state.step !== AppStep.ABOUT && (
+                {state.step !== AppStep.LANDING && state.step !== AppStep.ABOUT && (
                     <div className="h-24 flex items-center justify-between px-6 border-b border-zinc-200 dark:border-zinc-900 z-10 bg-white/80 dark:bg-black/50 backdrop-blur-md transition-all duration-300">
                         <button onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.LANDING })} className="font-bold tracking-tighter text-xl text-brand-blue dark:text-white hover:text-brand-gold dark:hover:text-brand-gold transition-colors flex items-center gap-2 hover:opacity-80 transition-opacity">
                             {/* UPDATED LOGO IMAGE SIZE */}
