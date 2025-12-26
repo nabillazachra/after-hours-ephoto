@@ -9,10 +9,10 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
-      https: {
+      https: (fs.existsSync('./localhost-key.pem') && fs.existsSync('./localhost.pem')) ? {
         key: fs.readFileSync('./localhost-key.pem'),
         cert: fs.readFileSync('./localhost.pem'),
-      },
+      } : undefined,
     },
     plugins: [react()],
     define: {
