@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { database as db } from '../services/database';
 import { AppStep, Session, Template, Transaction } from '../types';
@@ -10,6 +11,7 @@ import Modal from './ui/Modal';
 // --- MAIN DASHBOARD COMPONENT ---
 const AdminDashboard: React.FC = () => {
     const { state, dispatch } = useStore();
+    const navigate = useNavigate();
 
     // Replaced single string PIN with segmented 4-digit logic
     const [pinDigits, setPinDigits] = useState(['', '', '', '']);
@@ -196,11 +198,11 @@ const AdminDashboard: React.FC = () => {
 
     if (!authorized) {
         const logoSrc = state.isDarkMode
-            ? "https://drive.google.com/thumbnail?id=1cfqrsPfg36_zhVZIhpPkVa5uU5zE7pvI&sz=w1000" // Dark Mode Asset
-            : "https://drive.google.com/thumbnail?id=1sEUZYhZI4--wzXqkKv0NmsT1pGUM6RrN&sz=w1000"; // Light Mode Asset
+            ? "/logo-light.png" // Dark Mode Asset (White Text)
+            : "/logo-dark.png"; // Light Mode Asset (Black Text)
 
         return (
-            <div className="flex h-full min-h-screen flex-col relative overflow-hidden bg-zinc-50 dark:bg-[#050505] text-brand-black dark:text-white font-sans selection:bg-brand-blue selection:text-white">
+            <div className="flex h-full min-h-screen flex-col relative overflow-hidden bg-zinc-50 dark:bg-[#050505] text-brand-black dark:text-white font-sans selection:bg-brand-blue selection:text-white transition-colors duration-500">
 
                 {/* CSS for Shake */}
                 <style>{`
@@ -222,13 +224,22 @@ const AdminDashboard: React.FC = () => {
 
                 {/* Header */}
                 <header className="absolute top-0 left-0 w-full p-8 z-20 flex justify-between items-start">
-                    <div className="flex items-center gap-3 cursor-pointer" onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.LANDING })}>
+                    <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
                         <img
                             src={logoSrc}
                             alt="After Hours Logo"
                             className="h-24 w-auto object-contain drop-shadow-sm"
                         />
                     </div>
+
+                    {/* Theme Toggle */}
+                    <button
+                        onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
+                        className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-brand-black dark:text-white"
+                        aria-label="Toggle Theme"
+                    >
+                        {state.isDarkMode ? <Icons.Sun size={20} /> : <Icons.Moon size={20} />}
+                    </button>
                 </header>
 
                 {/* Main Content */}
@@ -391,7 +402,7 @@ const AdminDashboard: React.FC = () => {
                 </nav>
                 <div className="p-6 mt-auto border-t border-white/5">
                     <button
-                        onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.LANDING })}
+                        onClick={() => navigate('/')}
                         className="w-full flex items-center justify-between p-3 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-red-500/50 hover:bg-red-500/10 group transition-all duration-300"
                     >
                         <div className="flex items-center gap-3">
