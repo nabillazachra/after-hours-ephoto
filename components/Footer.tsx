@@ -17,14 +17,21 @@ const Footer: React.FC = () => {
           {/* Left Column: Navigation */}
           <div className="md:col-span-5 flex flex-col justify-start pt-10 md:pt-0">
             <nav className="flex flex-col gap-8 md:gap-10 items-start">
-              <button 
-                onClick={handleNavClick}
+              <button
+                onClick={() => dispatch({ type: 'SET_STEP', payload: AppStep.ABOUT })}
                 className="group relative inline-block text-sm md:text-base font-bold tracking-[0.15em] text-zinc-500 dark:text-zinc-400 hover:text-brand-blue dark:hover:text-white transition-colors duration-500 ease-out"
+              >
+                <span className="relative z-10">ABOUT</span>
+                <span className="absolute left-0 -bottom-2 w-0 h-[1px] bg-brand-blue dark:bg-white transition-all duration-700 ease-out group-hover:w-full opacity-50"></span>
+              </button>
+              <button
+                onClick={handleNavClick}
+                className="group relative inline-block text-sm md:text-base font-bold tracking-[0.15em] text-zinc-500 dark:text-zinc-400 hover:text-brand-blue dark:hover:text-white transition-colors duration-500 ease-out md:ml-12 lg:ml-16"
               >
                 <span className="relative z-10">TEMPLATE</span>
                 <span className="absolute left-0 -bottom-2 w-0 h-[1px] bg-brand-blue dark:bg-white transition-all duration-700 ease-out group-hover:w-full opacity-50"></span>
               </button>
-              <button 
+              <button
                 onClick={handleNavClick}
                 className="group relative inline-block text-sm md:text-base font-bold tracking-[0.15em] text-zinc-500 dark:text-zinc-400 hover:text-brand-blue dark:hover:text-white transition-colors duration-500 ease-out md:ml-12 lg:ml-16"
               >
@@ -42,22 +49,22 @@ const Footer: React.FC = () => {
           {/* Right Column: Icons & Decorative */}
           <div className="md:col-span-3 flex flex-col justify-between h-full min-h-[200px] md:items-end">
             <div className="flex gap-8 items-center md:justify-end">
-              <a 
-                href="https://www.linkedin.com/in/nabilla-zachra" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/in/nabilla-zachra"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="group text-zinc-400 dark:text-zinc-500 hover:text-brand-blue dark:hover:text-white transition-colors duration-500"
               >
                 <Icons.LinkedIn className="w-7 h-7 group-hover:scale-110 transition-transform duration-500" weight="light" />
               </a>
-              <a 
+              <a
                 href="mailto:nabillazachra14@gmail.com"
                 className="group text-zinc-400 dark:text-zinc-500 hover:text-brand-blue dark:hover:text-white transition-colors duration-500"
               >
                 <Icons.Envelope className="w-7 h-7 group-hover:scale-110 transition-transform duration-500" weight="light" />
               </a>
             </div>
-            
+
             {/* Decorative Gradient Line */}
             <div className="hidden md:flex flex-grow flex-col items-end justify-center py-12 opacity-20">
               <div className="w-[1px] h-24 bg-gradient-to-b from-transparent via-brand-blue dark:via-white to-transparent"></div>
@@ -76,7 +83,7 @@ const Footer: React.FC = () => {
             </span>
           </div>
           <p className="text-zinc-400 dark:text-zinc-600 text-[10px] md:text-xs font-light tracking-wide order-1 md:order-2 mb-6 md:mb-0">
-             © 2024 After Hours. All rights reserved.
+            © 2024 After Hours. All rights reserved.
           </p>
         </div>
       </div>

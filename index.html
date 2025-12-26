@@ -17,7 +17,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap"
     rel="stylesheet">
   <script>
     tailwind.config = {
@@ -27,8 +28,13 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
           },
           colors: {
+            primary: '#D4AF37', /* Replaced design's blue with Brand Gold */
+            "background-light": "#f6f6f8",
+            "background-dark": "#050505",
+            "surface-dark": "#111621",
             brand: {
               black: '#050505',
               gold: '#D4AF37',
