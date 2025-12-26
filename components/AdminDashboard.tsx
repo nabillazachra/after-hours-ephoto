@@ -202,123 +202,157 @@ const AdminDashboard: React.FC = () => {
             : "/logo-dark.png"; // Light Mode Asset (Black Text)
 
         return (
-            <div className="flex h-full min-h-screen flex-col relative overflow-hidden bg-zinc-50 dark:bg-[#050505] text-brand-black dark:text-white font-sans selection:bg-brand-blue selection:text-white transition-colors duration-500">
-
-                {/* CSS for Shake */}
+            <div className="flex h-screen w-full bg-zinc-50 dark:bg-[#050505] text-brand-black dark:text-white font-sans selection:bg-brand-blue selection:text-white overflow-hidden transition-colors duration-500">
+                {/* CSS for Shake & Custom Animations */}
                 <style>{`
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
-            }
-            .animate-shake {
-                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-            }
-        `}</style>
+                    @keyframes shake {
+                        0%, 100% { transform: translateX(0); }
+                        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                        20%, 40%, 60%, 80% { transform: translateX(5px); }
+                    }
+                    .animate-shake {
+                        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+                    }
+                `}</style>
 
-                {/* Noise Overlay */}
-                <div
-                    className="fixed inset-0 pointer-events-none z-0 opacity-[0.05]"
-                    style={{ backgroundImage: `url(https://lh3.googleusercontent.com/aida-public/AB6AXuCZ6QwBwtpj9_5Mdq_zfLyGLWh56wxef748P9x3tjDO0SF8vge6e2iN2QT5l3zRF1fybjm5G483DHDmdUwIkR0v82Xj8tvqRvKnHEZ5owmYvspKd-1kTPA6zbXu0oFDU9IBIIJKHNyy-ymkJZIejJVHs-PUFoNvhPzArbWpro_FPFjdTH6mAIBpeth2venSNchnztZF0HG2z1wzzUB2LBWt-O7pGvBc49fEx573DPARjvbQBLApPTuFKao4McggtmtOBkGWvAhZYZQe)` }}
-                />
-
-                {/* Header */}
-                <header className="absolute top-0 left-0 w-full p-8 z-20 flex justify-between items-start">
-                    <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+                {/* --- LEFT COLUMN: VISUAL (Desktop Only) --- */}
+                <div className="hidden md:flex relative w-1/2 h-full flex-col justify-between p-12 overflow-hidden bg-[#050505]">
+                    {/* Background Image */}
+                    <div className="absolute inset-0 z-0">
                         <img
-                            src={logoSrc}
-                            alt="After Hours Logo"
-                            className="h-24 w-auto object-contain drop-shadow-sm"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDorzkD2Peml4bRK6djAy4Fyv6st-0IQOlzWzGE-VWur41RlXqpfVdH2Dt6IchZIQzD3AJDn84qsrAS9hKAUCvbuKGc0dCLvINmNx4DHFDLxro_gpahpuwHWckpp4cJsJhGHAfnpqKpGidAUAvrlMohHLQqdUHx0HPQIluxSkYcuqKqNFyx5Px3LdXdqU2xiaazY7Em8KERI2xiefBrYbmZJY65Jtoc69TqSY4cB0SDLTO6NgRaaXU7HWTYSd8lCCJ05zbKLV9b7SnG"
+                            className="w-full h-full object-cover opacity-60 grayscale scale-105"
+                            alt="Admin Visual"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/40 mix-blend-multiply"></div>
+                        <div className="absolute inset-0 bg-black/20"></div>
                     </div>
 
-                    {/* Theme Toggle */}
-                    <button
-                        onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
-                        className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-brand-black dark:text-white"
-                        aria-label="Toggle Theme"
-                    >
-                        {state.isDarkMode ? <Icons.Sun size={20} /> : <Icons.Moon size={20} />}
-                    </button>
-                </header>
+                    {/* Grain Overlay */}
+                    <div className="absolute inset-0 z-[5] opacity-30 pointer-events-none mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'1\'/%3E%3C/svg%3E")' }}></div>
 
-                {/* Main Content */}
-                <main className="flex-grow flex flex-col items-center justify-center relative z-10 w-full px-6 animate-fade-in-up">
-                    <div className="w-full max-w-lg flex flex-col gap-12 sm:gap-16">
+                    {/* Content Over Visual */}
+                    <div className="relative z-10">
+                        <p className="text-white/60 text-xs font-mono tracking-widest uppercase">After Hours Studio</p>
+                    </div>
 
-                        {/* Headline */}
-                        <div className="text-center">
-                            <h2 className="text-zinc-500 dark:text-zinc-400 text-xs font-bold tracking-[0.4em] uppercase mb-2">Restricted Access</h2>
-                            <h3 className="text-brand-black dark:text-white text-3xl sm:text-4xl font-black tracking-tight">ENTER PIN</h3>
+                    <div className="relative z-10">
+                        <h1 className="text-6xl lg:text-8xl font-black tracking-tighter text-white leading-none mb-6">
+                            CONTROL<br />CENTER
+                        </h1>
+                        <div className="flex items-center gap-4 text-white/60">
+                            <div className="px-3 py-1 border border-white/20 rounded-full text-[10px] uppercase tracking-widest font-bold backdrop-blur-md">
+                                V.2.0 System
+                            </div>
+                            <div className="px-3 py-1 border border-white/20 rounded-full text-[10px] uppercase tracking-widest font-bold backdrop-blur-md">
+                                Secure Access
+                            </div>
                         </div>
+                    </div>
+                </div>
 
-                        {/* PIN Inputs */}
-                        <div className="flex justify-center w-full relative">
-                            <fieldset className={`flex gap-2 sm:gap-4 group ${isError ? 'animate-shake' : ''}`}>
-                                {pinDigits.map((digit, idx) => (
-                                    <input
-                                        key={idx}
-                                        ref={(el) => { inputRefs.current[idx] = el; }}
-                                        type="password" // MASKED PIN
-                                        inputMode="numeric"
-                                        maxLength={1}
-                                        value={digit}
-                                        autoFocus={idx === 0}
-                                        onChange={(e) => handleDigitChange(idx, e.target.value)}
-                                        onKeyDown={(e) => handleKeyDown(idx, e)}
-                                        className={`
-                                    flex h-16 w-12 sm:h-24 sm:w-16 bg-transparent text-center focus:outline-none focus:ring-0 border-b-2 
-                                    text-3xl sm:text-5xl font-mono transition-all duration-300 placeholder-transparent
-                                    ${isError
-                                                ? 'border-red-500 text-red-500 placeholder-red-500 animate-pulse'
-                                                : 'border-zinc-300 dark:border-zinc-800 focus:border-brand-blue dark:focus:border-brand-gold text-brand-black dark:text-white'
-                                            }
-                                `}
-                                        placeholder="0"
-                                    />
-                                ))}
-                            </fieldset>
-                        </div>
+                {/* --- RIGHT COLUMN: INTERACTION --- */}
+                <div className="w-full md:w-1/2 h-full relative flex flex-col bg-zinc-50 dark:bg-[#050505]">
 
-                        {/* Error Message */}
-                        <div className={`h-6 text-center -mt-6 transition-opacity duration-300 ${isError ? 'opacity-100' : 'opacity-0'}`}>
-                            <p className="text-red-500 font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2">
-                                <Icons.X size={14} weight="bold" /> Access Denied
-                            </p>
-                        </div>
+                    {/* Header Controls */}
+                    <div className="absolute top-0 right-0 p-8 flex items-center gap-4 z-20">
+                        <button
+                            onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
+                            className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-brand-black dark:text-zinc-400 dark:hover:text-white"
+                            title="Toggle Theme"
+                        >
+                            {state.isDarkMode ? <Icons.Sun size={20} /> : <Icons.Moon size={20} />}
+                        </button>
+                    </div>
 
-                        {/* Action Button */}
-                        <div className="flex justify-center">
+                    {/* Back Button (Absolute Top Left of Right Col) */}
+                    <div className="absolute top-0 left-0 p-8 z-20">
+                        <button
+                            onClick={() => navigate('/')}
+                            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-brand-black dark:hover:text-white transition-colors group"
+                        >
+                            <Icons.ArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+                            Back to Home
+                        </button>
+                    </div>
+
+                    {/* Main Form Container */}
+                    <div className="flex-grow flex flex-col items-center justify-center w-full px-8 sm:px-12 lg:px-24 animate-fade-in-up">
+                        <div className="w-full max-w-md flex flex-col gap-10">
+
+                            {/* Logo & Headline */}
+                            <div className="text-center flex flex-col items-center gap-6">
+                                <img
+                                    src={logoSrc}
+                                    alt="After Hours Logo"
+                                    className="h-16 w-auto object-contain drop-shadow-sm opacity-80"
+                                />
+                                <div>
+                                    <h2 className="text-brand-black dark:text-white text-3xl font-bold tracking-tight mb-2">Welcome Back</h2>
+                                    <p className="text-zinc-500 text-sm">Please enter your authorized PIN code to continue.</p>
+                                </div>
+                            </div>
+
+                            {/* PIN Inputs */}
+                            <div className="flex justify-center w-full relative">
+                                <fieldset className={`flex gap-3 sm:gap-4 group ${isError ? 'animate-shake' : ''}`}>
+                                    {pinDigits.map((digit, idx) => (
+                                        <input
+                                            key={idx}
+                                            ref={(el) => { inputRefs.current[idx] = el; }}
+                                            type="password" // MASKED PIN
+                                            inputMode="numeric"
+                                            maxLength={1}
+                                            value={digit}
+                                            autoFocus={idx === 0}
+                                            onChange={(e) => handleDigitChange(idx, e.target.value)}
+                                            onKeyDown={(e) => handleKeyDown(idx, e)}
+                                            className={`
+                                        flex h-14 w-12 sm:h-20 sm:w-16 bg-zinc-100 dark:bg-zinc-900 text-center focus:outline-none 
+                                        rounded-lg border-2 
+                                        text-2xl sm:text-4xl font-mono transition-all duration-300 placeholder-transparent shadow-inner
+                                        ${isError
+                                                    ? 'border-red-500 text-red-500 ring-4 ring-red-500/10'
+                                                    : 'border-transparent focus:border-brand-blue dark:focus:border-brand-gold focus:ring-4 focus:ring-brand-blue/10 dark:focus:ring-brand-gold/10 text-brand-black dark:text-white'
+                                                }
+                                    `}
+                                            placeholder="0"
+                                        />
+                                    ))}
+                                </fieldset>
+                            </div>
+
+                            {/* Error Toast */}
+                            <div className={`h-4 text-center transition-all ${isError ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                                <p className="text-red-500 text-xs font-bold tracking-wide flex items-center justify-center gap-2">
+                                    <Icons.WarningCircle weight="fill" />
+                                    Incorrect PIN Code
+                                </p>
+                            </div>
+
+                            {/* Action Button */}
                             <button
                                 onClick={() => handleLogin()}
-                                className="group relative overflow-hidden rounded-lg bg-brand-black dark:bg-white text-white dark:text-black h-14 w-full sm:w-64 px-8 text-sm font-black tracking-[0.15em] leading-normal uppercase transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                                className="w-full bg-brand-black dark:bg-white text-white dark:text-black h-12 rounded-lg font-bold tracking-widest uppercase text-xs hover:opacity-90 transition-all hover:scale-[1.02] shadow-lg active:scale-95 flex items-center justify-center gap-2 group"
                             >
-                                <span className="relative z-10 flex items-center justify-center gap-2">
-                                    Unlock Portal
-                                    <Icons.ArrowUpRight className="text-lg transition-transform duration-300 group-hover:translate-x-1" weight="bold" />
-                                </span>
-                                {/* Hover Gradient Effect */}
-                                <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+                                <Icons.LockKeySimple weight="bold" />
+                                Unlock Dashboard
                             </button>
+
+                            <div className="text-center">
+                                <button className="text-[10px] text-zinc-400 underline hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+                                    Lost your PIN?
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </main>
 
-                {/* Footer */}
-                <footer className="absolute bottom-0 w-full p-8 z-20 flex justify-between items-end pointer-events-none">
-                    <div className="hidden sm:block">
-                        <div className="h-px w-12 bg-zinc-300 dark:bg-zinc-700 mb-2"></div>
-                        <div className="h-px w-6 bg-zinc-300 dark:bg-zinc-700"></div>
+                    {/* Mobile Footer (Right Col) */}
+                    <div className="p-6 text-center md:text-right">
+                        <p className="text-[10px] text-zinc-400 font-mono">Protected by 256-bit Encryption</p>
                     </div>
-                    <div className="flex flex-col items-end gap-1 text-right">
-                        <div className="flex items-center gap-2 text-zinc-400 dark:text-zinc-500 mb-1">
-                            <Icons.Lock size={14} />
-                            <span className="text-[10px] font-mono tracking-widest uppercase">Secure Environment</span>
-                        </div>
-                        <p className="text-zinc-500 dark:text-zinc-600 text-[10px] font-bold tracking-widest uppercase">Admin V.1.0 // System Active</p>
-                    </div>
-                </footer>
 
+                </div>
             </div>
         );
     }
