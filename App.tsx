@@ -48,8 +48,8 @@ const MainLayout: React.FC = () => {
 
     // Logo Logic - Updated URLs
     const logoSrc = state.isDarkMode
-        ? "https://drive.google.com/thumbnail?id=1cfqrsPfg36_zhVZIhpPkVa5uU5zE7pvI&sz=w1000" // Dark Mode Asset
-        : "https://drive.google.com/thumbnail?id=1sEUZYhZI4--wzXqkKv0NmsT1pGUM6RrN&sz=w1000"; // Light Mode Asset
+        ? "/logo-light.png" // Dark Mode Asset (White Text)
+        : "/logo-dark.png"; // Light Mode Asset (Black Text)
 
     const renderStep = () => {
         switch (state.step) {

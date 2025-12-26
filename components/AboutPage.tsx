@@ -26,7 +26,7 @@ const AboutPage: React.FC = () => {
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-3 group cursor-pointer" onClick={handleBack}>
                         <img
-                            src="https://drive.google.com/thumbnail?id=1cfqrsPfg36_zhVZIhpPkVa5uU5zE7pvI&sz=w1000"
+                            src="/logo-light.png"
                             alt="The After Hours"
                             className="h-12 w-auto object-contain"
                         />
@@ -225,7 +225,7 @@ const AboutPage: React.FC = () => {
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
                                     <img
-                                        src="https://drive.google.com/thumbnail?id=1cfqrsPfg36_zhVZIhpPkVa5uU5zE7pvI&sz=w1000"
+                                        src="/logo-light.png"
                                         alt="The After Hours"
                                         className="h-10 w-auto object-contain"
                                     />
