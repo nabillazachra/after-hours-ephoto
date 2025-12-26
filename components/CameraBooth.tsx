@@ -17,6 +17,24 @@ const CameraBooth: React.FC = () => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
+  // Camera Switching State
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [isSwitching, setIsSwitching] = useState(false);
+
+  // Toggle Camera Function
+  const toggleCamera = () => {
+    // 1. Set switching state to true to unmount/remount clean
+    setIsSwitching(true);
+    setCameraReady(false);
+
+    // 2. Timeout to allow "unmount" before starting new stream logic
+    setTimeout(() => {
+      setFacingMode(prev => prev === 'user' ? 'environment' : 'user');
+      setIsSwitching(false);
+      // CameraReady triggers via onUserMedia callback from Webcam
+    }, 500);
+  };
+
   const capture = useCallback(() => {
     if (webcamRef.current) {
       // Try to get max resolution
@@ -54,7 +72,7 @@ const CameraBooth: React.FC = () => {
     };
 
     // Initial start delay only if camera is ready
-    if (cameraReady && countdown === null && photosTaken < PHOTOS_PER_SESSION) {
+    if (cameraReady && countdown === null && photosTaken < PHOTOS_PER_SESSION && !isSwitching) {
       timer = setTimeout(startSequence, 2000); // 2 seconds delay between shots for the toast to be seen
     }
 
@@ -70,7 +88,7 @@ const CameraBooth: React.FC = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [countdown, photosTaken, capture, dispatch, cameraReady]);
+  }, [countdown, photosTaken, capture, dispatch, cameraReady, isSwitching]);
 
   // Handle Abort/Back
   const handleBack = () => {
@@ -94,6 +112,20 @@ const CameraBooth: React.FC = () => {
         <Icons.CaretLeft weight="bold" />
         <span className="text-sm font-bold tracking-widest uppercase">Back</span>
       </button>
+
+      {/* Switch Camera Button (Visible when camera active & no countdown) */}
+      {!isSwitching && cameraReady && countdown === null && (
+        <button
+          onClick={toggleCamera}
+          className="absolute top-6 right-6 z-[60] flex items-center justify-center p-3 rounded-full text-white bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 transition-all duration-300 shadow-lg group"
+          title="Switch Camera"
+        >
+          <Icons.CameraRotate
+            size={24}
+            className={`transition-transform duration-500 group-hover:-rotate-180`}
+          />
+        </button>
+      )}
 
       {/* Flash Overlay */}
       <div
@@ -134,33 +166,40 @@ const CameraBooth: React.FC = () => {
           </div>
         ) : (
           <>
-            {!cameraReady && (
+            {(!cameraReady || isSwitching) && (
               <div className="absolute inset-0 z-20 flex items-center justify-center bg-zinc-900 w-full h-full">
-                <div className="animate-spin text-brand-gold">
-                  <Icons.Lightning size={48} weight="fill" />
+                <div className="flex flex-col items-center gap-4">
+                  <div className="animate-spin text-brand-gold">
+                    <Icons.Lightning size={48} weight="fill" />
+                  </div>
+                  {isSwitching && <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest">Switching Camera...</span>}
                 </div>
               </div>
             )}
-            <Webcam
-              ref={webcamRef}
-              audio={false}
-              screenshotFormat="image/jpeg"
-              width={1920}
-              height={1440}
-              forceScreenshotSourceSize={true}
-              mirrored={true}
-              screenshotQuality={0.92}
-              disablePictureInPicture={true}
-              imageSmoothing={false}
-              videoConstraints={{
-                width: { ideal: 1920 },
-                height: { ideal: 1440 },
-                facingMode: "user"
-              }}
-              onUserMedia={() => setCameraReady(true)}
-              onUserMediaError={(err) => setCameraError("Could not access camera. Please check permissions.")}
-              className={`absolute inset-0 w-full h-full object-cover transform scale-x-[-1] ${cameraReady ? 'opacity-100' : 'opacity-0'}`}
-            />
+
+            {!isSwitching && (
+              <Webcam
+                key={facingMode} // Force full remount on mode change
+                ref={webcamRef}
+                audio={false}
+                screenshotFormat="image/jpeg"
+                width={1920}
+                height={1440}
+                forceScreenshotSourceSize={true}
+                mirrored={facingMode === 'user'} // Only mirror front camera
+                screenshotQuality={0.92}
+                disablePictureInPicture={true}
+                imageSmoothing={false}
+                videoConstraints={{
+                  width: { ideal: 1920 },
+                  height: { ideal: 1440 },
+                  facingMode: facingMode
+                }}
+                onUserMedia={() => setCameraReady(true)}
+                onUserMediaError={(err) => setCameraError("Could not access camera. Please check permissions.")}
+                className={`absolute inset-0 w-full h-full object-cover transform ${facingMode === 'user' ? 'scale-x-[-1]' : ''} ${cameraReady ? 'opacity-100' : 'opacity-0'}`}
+              />
+            )}
           </>
         )}
 
@@ -184,7 +223,7 @@ const CameraBooth: React.FC = () => {
       </div>
 
       <p className="mt-4 text-zinc-500 font-mono text-sm uppercase tracking-widest">
-        {cameraError ? "Error" : (photosTaken < PHOTOS_PER_SESSION ? (cameraReady ? "Get Ready..." : "Initializing Camera...") : "Processing...")}
+        {cameraError ? "Error" : (photosTaken < PHOTOS_PER_SESSION ? (cameraReady && !isSwitching ? "Get Ready..." : "Initializing Camera...") : "Processing...")}
       </p>
 
       {/* Cancel Confirmation Modal */}

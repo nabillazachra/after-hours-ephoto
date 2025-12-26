@@ -7,7 +7,6 @@ export enum AppStep {
   CAMERA = 'CAMERA',
   PHOTO_SELECTION = 'PHOTO_SELECTION',
   RESULT = 'RESULT',
-  ADMIN = 'ADMIN',
   ABOUT = 'ABOUT'
 }
 
