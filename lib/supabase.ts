@@ -1,16 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-// --- CREDENTIALS (UPDATED) ---
-// Pastikan tidak ada spasi di awal/akhir string
-const supabaseUrl = 'https://uccfqmrtdalbheiwggiu.supabase.co';
-const supabaseKey = 'sb_publishable_mrTEzJTRF0xn-J49DuJ7nw_6-Jghw_-';
+// --- CREDENTIALS ---
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 // -----------------------------
 
-if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('PASTE_') || supabaseKey.includes('PASTE_')) {
-  console.error('CRITICAL ERROR: Supabase Credentials are missing inside src/lib/supabase.ts');
+if (!supabaseUrl || !supabaseKey) {
+  console.error('CRITICAL ERROR: Supabase Credentials are missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_KEY in your .env file or Zeabur environment variables.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 
 // Test connection automatically
 (async () => {
