@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>After Hours | Premium Photobooth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+              display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                black: '#050505',
+                gold: '#D4AF37',
+                goldDim: '#8A7120',
+                blue: '#002366', /* Royal Dark Blue */
+                white: '#F5F5F5',
+                gray: '#1A1A1A'
+              }
+            },
+            animation: {
+              'marquee': 'marquee 20s linear infinite',
+              'spin-slow': 'spin 10s linear infinite',
+              'fade-in-up': 'fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'fade-in-slow': 'fadeIn 2s ease-out forwards',
+              'reveal': 'reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: 0, transform: 'translateY(40px)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' },
+              },
+              fadeIn: {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
+              },
+              reveal: {
+                '0%': { transform: 'translateY(100%)' },
+                '100%': { transform: 'translateY(0)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #050505;
+        overflow-x: hidden;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+      }
+      .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+      }
+      
+      /* Design Utilities */
+      .text-outline-stroke {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+        color: transparent;
+      }
+      .hero-grain::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCIHwsoCdpafEi693q-aPQJfN87LgjtYYeeC-0l3DLi21H4_waOOl4lEsIg4R-0qHSy2eKpbuaaDnxo-f7Nqga69Kla7qMecZxQg_l8YT2g0TchDmhg1yl5C3cal_ufPBbWS9Db1JlBnl6rBXCzJK46lG25btB6Etr3zcXOKIjSkn6nJ0SOQybp9x_tAQz6K9gtkwVDBGEwq3v_WjQOooM6DEkcjfRnSp9h2_UDAOTX9zn5O4xhKrBx5974hUdm-G0TbyE9UdLJd8n");
+        opacity: 0.15;
+        pointer-events: none;
+        mix-blend-mode: overlay;
+      }
+      .writing-vertical-rl {
+        writing-mode: vertical-rl;
+      }
+      
+      /* Luxury Glow */
+      .luxury-glow {
+        background: radial-gradient(circle at center, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0) 70%);
+      }
+      
+      /* Smooth Scrolling for the whole html */
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-webcam": "https://esm.sh/react-webcam@^7.2.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.0",
+    "next/": "https://esm.sh/next@^16.1.1/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

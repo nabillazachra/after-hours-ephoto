@@ -1,0 +1,7 @@
+{
+  "name": "After Hours Photobooth",
+  "description": "A high-end, brutalist-chic commercial photobooth web application with a freemium model and admin dashboard.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
