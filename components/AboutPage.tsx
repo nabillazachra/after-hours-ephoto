@@ -186,16 +186,16 @@ const AboutPage: React.FC = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center">
-                                <h3 className="text-4xl md:text-6xl font-serif italic mb-6">"Make it yours."</h3>
+                                <h3 className="text-4xl md:text-6xl font-serif italic mb-6">"Editorial Standard."</h3>
                                 <p className="text-gray-400 text-lg leading-relaxed mb-8">
-                                    The interface is a white-label canvas. We strip away our identity so yours can shine. From button border-radius to loading animations, every pixel is configurable to match your brand's voice.
+                                    We don't just apply a filter. Our proprietary processing pipeline enhances lighting, skin tones, and details to deliver studio-quality portraits instantly.
                                 </p>
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold border border-brand-gold/50">
-                                        <Icons.PaintBucket size={24} weight="duotone" />
+                                        <Icons.MagicWand size={24} weight="duotone" />
                                     </div>
                                     <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-gray-400">
-                                        <Icons.Faders size={24} />
+                                        <Icons.Camera size={24} />
                                     </div>
                                     <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-gray-400">
                                         <Icons.Aperture size={24} />
@@ -221,7 +221,7 @@ const AboutPage: React.FC = () => {
                                 Take a Pic
                             </button>
                             <a
-                                href="https://www.linkedin.com/in/nabillazachra"
+                                href="https://www.linkedin.com/in/nabilla-zachra"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="border border-slate-900 dark:border-white/30 hover:border-white text-slate-900 dark:text-white px-8 py-4 rounded-lg text-sm font-bold uppercase tracking-widest transition-all inline-block hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
