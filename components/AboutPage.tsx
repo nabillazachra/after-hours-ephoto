@@ -154,12 +154,12 @@ const AboutPage: React.FC = () => {
                                     </div>
                                     <h3 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">Instant Social Integration</h3>
                                     <p className="text-gray-500 dark:text-gray-400 mb-6">Seamless sharing directly to Instagram Stories and TikTok with custom-generated meta tags and branding.</p>
-                                    <button
-                                        onClick={handleBook}
-                                        className="px-6 py-3 border border-slate-900 dark:border-white rounded-lg hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-bold uppercase tracking-wider"
+                                    <a
+                                        href="mailto:hello@theafterhours.com"
+                                        className="inline-block px-6 py-3 border border-slate-900 dark:border-white rounded-lg hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-bold uppercase tracking-wider"
                                     >
                                         Book Consultation
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
 
@@ -206,7 +206,7 @@ const AboutPage: React.FC = () => {
                                 onClick={handleBook}
                                 className="bg-brand-gold hover:bg-brand-goldDim text-white px-8 py-4 rounded-lg text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-blue-900/20"
                             >
-                                Book a Consultation
+                                Take a Pic
                             </button>
                             <a
                                 href="mailto:hello@theafterhours.com"
