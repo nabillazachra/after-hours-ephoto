@@ -21,7 +21,7 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [slots, setSlots] = useState<LayoutSlot[]>([]);
     const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
-    
+
     // Interaction State
     const [isDrawing, setIsDrawing] = useState(false);
     const [dragStart, setDragStart] = useState<{ x: number, y: number } | null>(null);
@@ -44,10 +44,10 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
             const f = e.target.files[0];
             setFile(f);
             setName(f.name.replace(/\.[^/.]+$/, ""));
-            
+
             const url = URL.createObjectURL(f);
             setImageUrl(url);
-            
+
             // Get Dimensions
             const img = new Image();
             img.onload = () => {
@@ -63,11 +63,11 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
     const getCanvasCoords = (e: React.MouseEvent) => {
         const canvas = canvasRef.current;
         if (!canvas || !imgMeta) return { x: 0, y: 0 };
-        
+
         const rect = canvas.getBoundingClientRect();
         const scaleX = imgMeta.width / rect.width;
         const scaleY = imgMeta.height / rect.height;
-        
+
         return {
             x: (e.clientX - rect.left) * scaleX,
             y: (e.clientY - rect.top) * scaleY
@@ -86,18 +86,18 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
             // 1. Draw Background & Image
             ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, imgMeta.width, imgMeta.height);
-            
+
             // Draw original image (overlay)
             ctx.drawImage(img, 0, 0, imgMeta.width, imgMeta.height);
-            
+
             // 2. Draw Slots
             slots.forEach((slot, idx) => {
                 const isSelected = slot.id === selectedSlotId;
-                
+
                 // Fill (Semi-transparent)
                 ctx.fillStyle = isSelected ? 'rgba(212, 175, 55, 0.3)' : 'rgba(0, 0, 0, 0.5)';
                 ctx.fillRect(slot.x, slot.y, slot.width, slot.height);
-                
+
                 // Stroke
                 ctx.lineWidth = isSelected ? 4 : 2;
                 ctx.strokeStyle = isSelected ? '#D4AF37' : '#fff';
@@ -113,9 +113,9 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
 
             // 3. Draw Active Dragging Rect
             if (isDrawing && dragStart && canvasRef.current) {
-                 // We can't easily get current mouse pos here without state, 
-                 // but drawing logic usually runs on animation frame or event.
-                 // Handled in mouse move.
+                // We can't easily get current mouse pos here without state, 
+                // but drawing logic usually runs on animation frame or event.
+                // Handled in mouse move.
             }
         };
         img.src = imageUrl;
@@ -129,13 +129,13 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
     const handleMouseDown = (e: React.MouseEvent) => {
         if (!imgMeta) return;
         const coords = getCanvasCoords(e);
-        
+
         // 1. Check Hit Test on Existing Slots
         // Reverse order to select top-most first
-        const hitSlot = [...slots].reverse().find(s => 
-            coords.x >= s.x && 
-            coords.x <= s.x + s.width && 
-            coords.y >= s.y && 
+        const hitSlot = [...slots].reverse().find(s =>
+            coords.x >= s.x &&
+            coords.x <= s.x + s.width &&
+            coords.y >= s.y &&
             coords.y <= s.y + s.height
         );
 
@@ -153,23 +153,23 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDrawing || !dragStart || !imgMeta) return;
         const coords = getCanvasCoords(e);
-        
+
         // Re-render canvas with transient rectangle
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
-        
+
         // We rely on the base drawCanvas to clear/redraw bg, then we add current rect
-        drawCanvas(); 
-        
+        drawCanvas();
+
         // Wait for image load in drawCanvas is async, so we might flicker. 
         // For a robust implementation, we'd cache the image.
         // Simplified: Just drawing rect on top for now assuming sync draw.
-        
+
         const w = coords.x - dragStart.x;
         const h = coords.y - dragStart.y;
-        
+
         ctx.strokeStyle = '#00ff00';
         ctx.lineWidth = 2;
         ctx.strokeRect(dragStart.x, dragStart.y, w, h);
@@ -180,7 +180,7 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
             const coords = getCanvasCoords(e);
             const w = coords.x - dragStart.x;
             const h = coords.y - dragStart.y;
-            
+
             if (Math.abs(w) > 20 && Math.abs(h) > 20) {
                 // Normalize negative width/height
                 const newSlot: LayoutSlot = {
@@ -206,7 +206,7 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
         setIsSaving(true);
         try {
             const layout = { width: imgMeta.width, height: imgMeta.height, slots };
-            
+
             if (initialTemplate) {
                 await db.updateTemplate(initialTemplate.id, {
                     name,
@@ -248,23 +248,23 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
                     </div>
                 </div>
                 <div className="flex items-center gap-4">
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Template Name"
                         className="bg-zinc-800 border-none rounded px-3 py-2 text-sm font-bold focus:ring-1 focus:ring-brand-gold outline-none w-48"
                     />
-                     <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
                         <span className="text-xs text-zinc-500 uppercase">Bg:</span>
-                        <input 
-                            type="color" 
+                        <input
+                            type="color"
                             value={bgColor}
                             onChange={(e) => setBgColor(e.target.value)}
                             className="w-8 h-8 rounded cursor-pointer border-none bg-transparent"
                         />
                     </div>
-                    <button 
+                    <button
                         onClick={handleSave}
                         disabled={isSaving || slots.length === 0}
                         className="px-6 py-2 bg-brand-gold text-black font-bold text-sm hover:bg-white transition-colors disabled:opacity-50"
@@ -279,10 +279,10 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
                 <div className="flex-1 bg-zinc-900/50 p-8 overflow-auto flex items-center justify-center relative">
                     {!imageUrl ? (
                         <div className="text-center p-12 border-2 border-dashed border-zinc-700 rounded-xl hover:border-brand-gold transition-colors cursor-pointer relative">
-                             <input type="file" onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/png" />
-                             <Icons.Download className="mx-auto mb-4 rotate-180 text-zinc-500" size={48} />
-                             <h3 className="text-xl font-bold mb-2">UPLOAD FRAME (PNG)</h3>
-                             <p className="text-zinc-500 text-sm">Transparent PNGs recommended</p>
+                            <input type="file" onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer" accept="image/png" />
+                            <Icons.Download className="mx-auto mb-4 rotate-180 text-zinc-500" size={48} />
+                            <h3 className="text-xl font-bold mb-2">UPLOAD FRAME (PNG)</h3>
+                            <p className="text-zinc-500 text-sm">Transparent PNGs recommended</p>
                         </div>
                     ) : (
                         <div className="relative shadow-2xl border border-zinc-800" style={{ fontSize: 0 }}>
@@ -314,7 +314,7 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
                 {/* Sidebar Controls */}
                 <div className="w-72 bg-zinc-900 border-l border-zinc-800 p-6 flex flex-col">
                     <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Slot Config</h3>
-                    
+
                     {selectedSlotId ? (
                         <div className="space-y-4 animate-fade-in">
                             <div className="p-4 bg-zinc-800 rounded border border-zinc-700">
@@ -326,11 +326,63 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
                                 </div>
                                 {slots.map(s => s.id === selectedSlotId && (
                                     <div key={s.id} className="space-y-3">
+                                        {/* Precision Controls */}
+                                        <div className="grid grid-cols-2 gap-2 mb-3">
+                                            <div>
+                                                <label className="text-[10px] uppercase text-zinc-500 block mb-1">X Pos</label>
+                                                <input
+                                                    type="number"
+                                                    value={Math.round(s.x)}
+                                                    onChange={(e) => {
+                                                        const val = parseInt(e.target.value) || 0;
+                                                        setSlots(slots.map(slot => slot.id === s.id ? { ...slot, x: val } : slot));
+                                                    }}
+                                                    className="w-full bg-zinc-900 border border-zinc-700 px-2 py-1 text-sm font-mono focus:border-brand-gold outline-none text-white"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] uppercase text-zinc-500 block mb-1">Y Pos</label>
+                                                <input
+                                                    type="number"
+                                                    value={Math.round(s.y)}
+                                                    onChange={(e) => {
+                                                        const val = parseInt(e.target.value) || 0;
+                                                        setSlots(slots.map(slot => slot.id === s.id ? { ...slot, y: val } : slot));
+                                                    }}
+                                                    className="w-full bg-zinc-900 border border-zinc-700 px-2 py-1 text-sm font-mono focus:border-brand-gold outline-none text-white"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] uppercase text-zinc-500 block mb-1">Width</label>
+                                                <input
+                                                    type="number"
+                                                    value={Math.round(s.width)}
+                                                    onChange={(e) => {
+                                                        const val = parseInt(e.target.value) || 0;
+                                                        setSlots(slots.map(slot => slot.id === s.id ? { ...slot, width: Math.max(1, val) } : slot));
+                                                    }}
+                                                    className="w-full bg-zinc-900 border border-zinc-700 px-2 py-1 text-sm font-mono focus:border-brand-gold outline-none text-white"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] uppercase text-zinc-500 block mb-1">Height</label>
+                                                <input
+                                                    type="number"
+                                                    value={Math.round(s.height)}
+                                                    onChange={(e) => {
+                                                        const val = parseInt(e.target.value) || 0;
+                                                        setSlots(slots.map(slot => slot.id === s.id ? { ...slot, height: Math.max(1, val) } : slot));
+                                                    }}
+                                                    className="w-full bg-zinc-900 border border-zinc-700 px-2 py-1 text-sm font-mono focus:border-brand-gold outline-none text-white"
+                                                />
+                                            </div>
+                                        </div>
+
                                         <div>
                                             <label className="text-[10px] uppercase text-zinc-500 block mb-1">Target Photo Index (0-2)</label>
-                                            <input 
-                                                type="number" 
-                                                value={s.targetTakeIndex} 
+                                            <input
+                                                type="number"
+                                                value={s.targetTakeIndex}
                                                 onChange={(e) => {
                                                     const val = parseInt(e.target.value);
                                                     setSlots(slots.map(slot => slot.id === s.id ? { ...slot, targetTakeIndex: val } : slot));
@@ -341,13 +393,13 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
                                         <div>
                                             <label className="text-[10px] uppercase text-zinc-500 block mb-1">Layer Order</label>
                                             <div className="flex bg-zinc-900 rounded p-1">
-                                                <button 
+                                                <button
                                                     onClick={() => setSlots(slots.map(slot => slot.id === s.id ? { ...slot, layerOrder: 'bottom' } : slot))}
                                                     className={`flex-1 text-[10px] font-bold py-1 ${s.layerOrder !== 'top' ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}
                                                 >
                                                     BEHIND
                                                 </button>
-                                                <button 
+                                                <button
                                                     onClick={() => setSlots(slots.map(slot => slot.id === s.id ? { ...slot, layerOrder: 'top' } : slot))}
                                                     className={`flex-1 text-[10px] font-bold py-1 ${s.layerOrder === 'top' ? 'bg-zinc-700 text-white' : 'text-zinc-500'}`}
                                                 >
@@ -366,13 +418,13 @@ const TemplateManager: React.FC<TemplateManagerProps> = ({ onCancel, onSaveSucce
                     )}
 
                     <div className="mt-auto pt-6 border-t border-zinc-800">
-                         <div className="text-[10px] text-zinc-500 font-mono mb-2">INSTRUCTIONS</div>
-                         <ul className="text-xs text-zinc-400 space-y-1 list-disc pl-4">
-                             <li>Upload a PNG frame (transparent center).</li>
-                             <li><strong>Draw:</strong> Click & Drag on canvas to define photo area.</li>
-                             <li><strong>Select:</strong> Click existing box to edit properties.</li>
-                             <li>Ensure 'Target Index' matches camera sequence (0=1st, 1=2nd, etc).</li>
-                         </ul>
+                        <div className="text-[10px] text-zinc-500 font-mono mb-2">INSTRUCTIONS</div>
+                        <ul className="text-xs text-zinc-400 space-y-1 list-disc pl-4">
+                            <li>Upload a PNG frame (transparent center).</li>
+                            <li><strong>Draw:</strong> Click & Drag on canvas to define photo area.</li>
+                            <li><strong>Select:</strong> Click existing box to edit properties.</li>
+                            <li>Ensure 'Target Index' matches camera sequence (0=1st, 1=2nd, etc).</li>
+                        </ul>
                     </div>
                 </div>
             </div>
