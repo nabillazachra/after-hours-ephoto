@@ -154,8 +154,11 @@ const AboutPage: React.FC = () => {
                                     </div>
                                     <h3 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">Instant Social Integration</h3>
                                     <p className="text-gray-500 dark:text-gray-400 mb-6">Seamless sharing directly to Instagram Stories and TikTok with custom-generated meta tags and branding.</p>
-                                    <button className="px-6 py-3 border border-slate-900 dark:border-white rounded-lg hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-bold uppercase tracking-wider">
-                                        View Demo
+                                    <button
+                                        onClick={handleBook}
+                                        className="px-6 py-3 border border-slate-900 dark:border-white rounded-lg hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors text-sm font-bold uppercase tracking-wider"
+                                    >
+                                        Book Consultation
                                     </button>
                                 </div>
                             </div>
@@ -165,7 +168,7 @@ const AboutPage: React.FC = () => {
                                 <div className="relative group cursor-pointer overflow-hidden rounded-2xl">
                                     <div className="aspect-[3/4] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-500" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAeH4oClaNFF-fCIF1LwOa8kn-zA-LlMMRBQNnCqE4fQcFt9-f4WexbRrQTYEVdaIRbsSP9Oqs3jgqXRk66C1bvCvEndgcJRSf6dnP5m7yxWyrpTt3JBmUE_L952byyhlN771nxhs7obDc1rjZSgP8uvo5_2mwZ1yz9Wn1TJLk-j1q7YnM6O72WoxMnLBAXS73VQBQRglIM9hKpQgKaMbx_VWyTTR3lMUqwdtdwsbURVXx6KfWhWYFJ6KncUsKzbWaaZ0AxaSv1eaQY')" }}></div>
                                     <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                        <h4 class="text-white font-bold text-xl">Custom Branding</h4>
+                                        <h4 className="text-white font-bold text-xl">Custom Branding</h4>
                                         <p className="text-gray-300 text-sm mt-2">Your logo, your colors, your fonts.</p>
                                     </div>
                                 </div>
@@ -205,9 +208,12 @@ const AboutPage: React.FC = () => {
                             >
                                 Book a Consultation
                             </button>
-                            <button className="border border-slate-900 dark:border-white/30 hover:border-white text-slate-900 dark:text-white px-8 py-4 rounded-lg text-sm font-bold uppercase tracking-widest transition-all">
-                                Download Media Kit
-                            </button>
+                            <a
+                                href="mailto:hello@theafterhours.com"
+                                className="border border-slate-900 dark:border-white/30 hover:border-white text-slate-900 dark:text-white px-8 py-4 rounded-lg text-sm font-bold uppercase tracking-widest transition-all inline-block"
+                            >
+                                Connect With Me
+                            </a>
                         </div>
                     </div>
                 </section>
@@ -218,19 +224,27 @@ const AboutPage: React.FC = () => {
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-12">
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
-                                    <span className="material-symbols-outlined text-brand-gold">shutter_speed</span>
-                                    <span className="font-bold tracking-[0.2em] uppercase">The After Hours</span>
+                                    <img
+                                        src="https://drive.google.com/thumbnail?id=1cfqrsPfg36_zhVZIhpPkVa5uU5zE7pvI&sz=w1000"
+                                        alt="The After Hours"
+                                        className="h-10 w-auto object-contain"
+                                    />
                                 </div>
                                 <p className="text-gray-500 max-w-xs text-sm leading-relaxed">
                                     A product of editorial design thinking applied to event technology. <br />Based in Jakarta.
                                 </p>
                             </div>
-                            <a className="text-3xl md:text-5xl font-serif hover:text-brand-gold transition-colors border-b border-transparent hover:border-brand-gold pb-2" href="mailto:hello@theafterhours.com">
+                            <a className="text-3xl md:text-5xl font-serif hover:text-brand-gold transition-colors border-b border-transparent hover:border-brand-gold pb-2 cursor-pointer">
                                 hello@theafterhours.com
                             </a>
                         </div>
+
                         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-xs text-gray-600">
                             <p>© 2025 The After Hours Inc. All rights reserved.</p>
+                            <div className="flex gap-6 mt-4 md:mt-0">
+                                <a className="hover:text-brand-gold transition-colors cursor-pointer">Instagram</a>
+                                <a className="hover:text-brand-gold transition-colors cursor-pointer">TikTok</a>
+                            </div>
                             <p className="font-mono mt-2 md:mt-0">DESIGNED FOR THE BOLD</p>
                         </div>
                     </div>
